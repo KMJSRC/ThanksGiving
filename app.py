@@ -74,7 +74,7 @@ def create_card():
     thanks_text = (
         "Respected Dean-SRC, Organizer-HOD, and Resource Person,\n\n"
         "We sincerely thank you for permitting, organizing and delivering a wonderful\n"
-        "and highly informative AI Workshop.\n\n"
+        "and highly informative AI Workshop on 14.02.1026.\n\n"
         "Your valuable insights and guidance motivated us to explore AI\n"
         "applications in Academics, and Research.\n\n"
         "We truly appreciate your great support and efforts."
@@ -107,6 +107,7 @@ def create_card():
 if st.button("Generate Thanksgiving Card"):
     card_image = create_card()
     st.image(card_image, caption="Generated Greeting Card", use_column_width=True)
+
 
 
 
