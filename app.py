@@ -147,7 +147,7 @@ def create_card():
 
     expectations = (
         "1. More hands-on sessions using AI tools\n"
-        "2. Practical training on ML and Deep Learning\n"
+        "2. Practical training on ML, DL and mainly on XAI\n"
         "3. Real-time project demonstrations\n"
         "4. More examples on AI applications in research"
     )
@@ -175,6 +175,7 @@ def create_card():
 if st.button("Generate Thanksgiving Card"):
     card_image = create_card()
     st.image(card_image, caption="Generated Greeting Card", use_column_width=True)
+
 
 
 
