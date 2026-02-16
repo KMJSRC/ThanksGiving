@@ -27,10 +27,10 @@ def create_card():
     draw = ImageDraw.Draw(card)
 
     # ---------------- FONT SIZES (INCREASED) ----------------
-    title_font = get_font(45, bold=True)   # Bigger title
-    text_font = get_font(30)              # Bigger main text
-    small_font = get_font(28)             # Bigger list text
-    footer_font = get_font(26)            # Footer text
+    title_font = get_font(40, bold=True)   # Bigger title
+    text_font = get_font(28)              # Bigger main text
+    small_font = get_font(25)             # Bigger list text
+    footer_font = get_font(20)            # Footer text
 
     y = 20
 
@@ -95,7 +95,7 @@ def create_card():
         "5. More time for interactive Q&A sessions"
     )
 
-    draw.multiline_text((100, y), expectations, fill="black", font=small_font, spacing=40)
+    draw.multiline_text((100, y), expectations, fill="black", font=small_font, spacing=35)
 
     # ---------------- FOOTER ----------------
     footer = "With Regards,\nWorkshop Participants-KMJ"
@@ -108,6 +108,7 @@ def create_card():
 if st.button("Generate Thanksgiving Card"):
     card_image = create_card()
     st.image(card_image, caption="Generated Greeting Card", use_column_width=True)
+
 
 
 
