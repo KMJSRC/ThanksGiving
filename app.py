@@ -99,7 +99,7 @@ def create_card():
 
     # ---------------- FOOTER ----------------
     footer = "With Regards,\nWorkshop Participants-KMJ"
-    draw.multiline_text((680, 1180), footer, fill="darkred", font=footer_font, spacing=10)
+    draw.multiline_text((680, 1180), footer, fill="darkred", font=footer_font, spacing=30)
 
     return card
 
@@ -108,4 +108,5 @@ def create_card():
 if st.button("Generate Thanksgiving Card"):
     card_image = create_card()
     st.image(card_image, caption="Generated Greeting Card", use_column_width=True)
+
 
