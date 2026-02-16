@@ -21,7 +21,7 @@ def get_font(size, bold=False):
 
 def create_card():
     card_width = 1200
-    card_height = 2500
+    card_height = 1900
 
     # Light background (soft decoration)
     card = Image.new("RGB", (card_width, card_height), (248, 248, 255))
@@ -175,4 +175,5 @@ def create_card():
 if st.button("Generate Thanksgiving Card"):
     card_image = create_card()
     st.image(card_image, caption="Generated Greeting Card", use_column_width=True)
+
 
