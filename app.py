@@ -7,50 +7,70 @@ st.set_page_config(page_title="AI Workshop Thanksgiving Card", layout="centered"
 st.title("AI Workshop Thanksgiving Card Generator")
 st.write("Click the button below to generate the greeting card.")
 
+
+# ---------------- SAFE FONT FUNCTION ----------------
+def get_font(size, bold=False):
+    try:
+        if bold:
+            return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size)
+        else:
+            return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", size)
+    except:
+        return ImageFont.load_default()
+
+
 def create_card():
     card_width = 1000
-    card_height = 1200
+    card_height = 1300
+
     card = Image.new("RGB", (card_width, card_height), (255, 255, 255))
     draw = ImageDraw.Draw(card)
 
-    title_font = ImageFont.load_default()
-    text_font = ImageFont.load_default()
-    small_font = ImageFont.load_default()
+    # ---------------- FONT SIZES (INCREASED) ----------------
+    title_font = get_font(45, bold=True)   # Bigger title
+    text_font = get_font(30)              # Bigger main text
+    small_font = get_font(28)             # Bigger list text
+    footer_font = get_font(26)            # Footer text
 
     y = 20
 
-    # Logo
+    # ---------------- LOGO ----------------
     if os.path.exists("logo.jpeg"):
         logo = Image.open("logo.jpeg").convert("RGB")
-        logo = logo.resize((800, 200))
-        card.paste(logo, ((card_width - 800) // 2, y))
-        y += 230
+        logo = logo.resize((900, 220))
+        card.paste(logo, ((card_width - 900) // 2, y))
+        y += 250
     else:
         draw.text((20, y), "logo.jpeg missing", fill="red", font=text_font)
         y += 50
 
-    # Title
-    draw.text((250, y), "AI Workshop Thanksgiving Card", fill="darkblue", font=title_font)
-    y += 60
+    # ---------------- TITLE (CENTER) ----------------
+    title = "AI Workshop Thanksgiving Card"
+    bbox = draw.textbbox((0, 0), title, font=title_font)
+    title_width = bbox[2] - bbox[0]
+    draw.text(((card_width - title_width) // 2, y), title, fill="darkblue", font=title_font)
+    y += 80
 
-    # Photos
+    # ---------------- PHOTOS ----------------
     photos = ["BS.jpg", "VK.jpg", "RRK.jpg"]
-    photo_size = (220, 220)
-    spacing = 40
+    photo_size = (240, 260)
+    spacing = 50
     total_width = 3 * photo_size[0] + 2 * spacing
     start_x = (card_width - total_width) // 2
 
     for i, p in enumerate(photos):
         x = start_x + i * (photo_size[0] + spacing)
+
         if os.path.exists(p):
             img = Image.open(p).convert("RGB").resize(photo_size)
             card.paste(img, (x, y))
         else:
             draw.rectangle([x, y, x + photo_size[0], y + photo_size[1]], outline="black", width=3)
-            draw.text((x + 60, y + 100), "Missing", fill="red", font=small_font)
+            draw.text((x + 60, y + 120), "Missing", fill="red", font=small_font)
 
-    y += 260
+    y += photo_size[1] + 50
 
+    # ---------------- MESSAGE ----------------
     thanks_text = (
         "Respected Dean, Organizer, and Resource Person,\n\n"
         "We sincerely thank you for organizing and delivering a wonderful\n"
@@ -60,11 +80,12 @@ def create_card():
         "We truly appreciate your great support and efforts."
     )
 
-    draw.multiline_text((80, y), thanks_text, fill="black", font=text_font, spacing=10)
-    y += 350
+    draw.multiline_text((80, y), thanks_text, fill="black", font=text_font, spacing=12)
+    y += 320
 
+    # ---------------- EXPECTATIONS ----------------
     draw.text((80, y), "Participants' Expectations:", fill="darkgreen", font=title_font)
-    y += 40
+    y += 60
 
     expectations = (
         "1. More hands-on sessions using AI tools\n"
@@ -74,15 +95,16 @@ def create_card():
         "5. More time for interactive Q&A sessions"
     )
 
-    draw.multiline_text((100, y), expectations, fill="black", font=small_font, spacing=8)
+    draw.multiline_text((100, y), expectations, fill="black", font=small_font, spacing=12)
 
+    # ---------------- FOOTER ----------------
     footer = "With Regards,\nWorkshop Participants"
-    draw.multiline_text((700, 1100), footer, fill="darkred", font=small_font, spacing=6)
+    draw.multiline_text((680, 1180), footer, fill="darkred", font=footer_font, spacing=10)
 
     return card
 
 
-# Button
+# ---------------- BUTTON ----------------
 if st.button("Generate Thanksgiving Card"):
     card_image = create_card()
     st.image(card_image, caption="Generated Greeting Card", use_column_width=True)
