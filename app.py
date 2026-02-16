@@ -27,7 +27,7 @@ def create_card():
     draw = ImageDraw.Draw(card)
 
     # ---------------- FONT SIZES (INCREASED) ----------------
-    title_font = get_font(40, bold=True)   # Bigger title
+    title_font = get_font(35, bold=True)   # Bigger title
     text_font = get_font(28)              # Bigger main text
     small_font = get_font(25)             # Bigger list text
     footer_font = get_font(20)            # Footer text
@@ -72,7 +72,7 @@ def create_card():
 
     # ---------------- MESSAGE ----------------
     thanks_text = (
-        "Respected Dean, Organizer, and Resource Person,\n\n"
+        "Respected Dean-SRC, Organizer-HOD, and Resource Person,\n\n"
         "We sincerely thank you for organizing and delivering a wonderful\n"
         "and highly informative AI Workshop.\n\n"
         "Your valuable insights and guidance motivated us to explore AI\n"
@@ -92,7 +92,6 @@ def create_card():
         "2. Practical training on ML and Deep Learning\n"
         "3. Real-time project demonstrations\n"
         "4. More examples on AI applications in research\n"
-        "5. More time for interactive Q&A sessions"
     )
 
     draw.multiline_text((100, y), expectations, fill="black", font=small_font, spacing=25)
@@ -108,6 +107,7 @@ def create_card():
 if st.button("Generate Thanksgiving Card"):
     card_image = create_card()
     st.image(card_image, caption="Generated Greeting Card", use_column_width=True)
+
 
 
 
