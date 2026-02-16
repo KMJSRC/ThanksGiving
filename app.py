@@ -1,6 +1,11 @@
-import gradio as gr
+import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
 import os
+
+st.set_page_config(page_title="AI Workshop Thanksgiving Card", layout="centered")
+
+st.title("AI Workshop Thanksgiving Card Generator")
+st.write("Click the button below to generate the greeting card.")
 
 def create_card():
     card_width = 1000
@@ -8,7 +13,6 @@ def create_card():
     card = Image.new("RGB", (card_width, card_height), (255, 255, 255))
     draw = ImageDraw.Draw(card)
 
-    # Use default fonts (safe for HuggingFace)
     title_font = ImageFont.load_default()
     text_font = ImageFont.load_default()
     small_font = ImageFont.load_default()
@@ -26,8 +30,7 @@ def create_card():
         y += 50
 
     # Title
-    title = "AI Workshop Thanksgiving Card"
-    draw.text((250, y), title, fill="darkblue", font=title_font)
+    draw.text((250, y), "AI Workshop Thanksgiving Card", fill="darkblue", font=title_font)
     y += 60
 
     # Photos
@@ -48,7 +51,6 @@ def create_card():
 
     y += 260
 
-    # Message
     thanks_text = (
         "Respected Dean, Organizer, and Resource Person,\n\n"
         "We sincerely thank you for organizing and delivering a wonderful\n"
@@ -57,10 +59,10 @@ def create_card():
         "applications in academics, research, and industry.\n\n"
         "We truly appreciate your great support and efforts."
     )
+
     draw.multiline_text((80, y), thanks_text, fill="black", font=text_font, spacing=10)
     y += 350
 
-    # Expectations
     draw.text((80, y), "Participants' Expectations:", fill="darkgreen", font=title_font)
     y += 40
 
@@ -71,27 +73,16 @@ def create_card():
         "4. More examples on AI applications in research\n"
         "5. More time for interactive Q&A sessions"
     )
+
     draw.multiline_text((100, y), expectations, fill="black", font=small_font, spacing=8)
 
-    # Footer
     footer = "With Regards,\nWorkshop Participants"
     draw.multiline_text((700, 1100), footer, fill="darkred", font=small_font, spacing=6)
 
-    # IMPORTANT: Save and return file path (best for HuggingFace)
-    output_path = "generated_card.png"
-    card.save(output_path)
-
-    return output_path
+    return card
 
 
-with gr.Blocks() as demo:
-    gr.Markdown("<h1 style='text-align:center;'>AI Workshop Thanksgiving Card Generator</h1>")
-    gr.Markdown("Click the button below to generate the greeting card.")
-
-    btn = gr.Button("Generate Thanksgiving Card")
-
-    output_img = gr.Image(label="Generated Greeting Card")
-
-    btn.click(fn=create_card, inputs=[], outputs=output_img)
-
-demo.launch()
+# Button
+if st.button("Generate Thanksgiving Card"):
+    card_image = create_card()
+    st.image(card_image, caption="Generated Greeting Card", use_column_width=True)
